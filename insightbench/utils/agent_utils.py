@@ -1525,6 +1525,7 @@ def get_chat_model(model_name, temperature=0):
             response = tokenizer.decode(output_ids[0][input_ids.shape[-1]:], skip_special_tokens=True)
             return response
 
+        temperature = max(temperature, 1e-5)
         llm = lambda content: qwen_chat(content=content, temperature=temperature)
             
 
