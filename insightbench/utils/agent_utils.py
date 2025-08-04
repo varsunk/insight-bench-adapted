@@ -1486,6 +1486,47 @@ def get_chat_model(model_name, temperature=0):
             .choices[0]
             .message.content
         )
+    
+    elif "qwen" in model_name:
+        # use similar format as gpt with huggingface instead
+        from transformers import AutoTokenizer, AutoModelForCausalLM
+        import torch
+
+        model_id = "Qwen/Qwen2-1.5B-Instruct"
+        tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
+        model = AutoModelForCausalLM.from_pretrained(
+            model_id,
+            device_map="auto",
+            torch_dtype=torch.bfloat16,
+            trust_remote_code=True
+        )
+        
+        # function to interface w/ hf model in the same way as is done with openai model above
+        def qwen_chat(content, temperature):
+            messages = [
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": content}
+            ]
+
+            input_ids = tokenizer.apply_chat_template(
+                messages,
+                return_tensors="pt",
+                add_generation_prompt=True
+            ).to(model.device)
+            
+            output_ids = model.generate(
+                input_ids,
+                max_new_tokens=512,
+                do_sample=True,
+                temperature=temperature,
+                pad_token_id=tokenizer.eos_token_id
+            )
+
+            response = tokenizer.decode(output_ids[0][input_ids.shape[-1]:], skip_special_tokens=True)
+            return response
+
+        llm = lambda content: qwen_chat(content=content, temperature=temperature)
+            
 
     return llm
 
