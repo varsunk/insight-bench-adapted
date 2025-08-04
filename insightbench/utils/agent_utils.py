@@ -1508,21 +1508,22 @@ def get_chat_model(model_name, temperature=0):
                 {"role": "user", "content": content}
             ]
 
-            input_ids = tokenizer.apply_chat_template(
+            inputs = tokenizer.apply_chat_template(
                 messages,
                 return_tensors="pt",
                 add_generation_prompt=True
-            ).to(model.device)
-            
+            )
+            inputs = {k: v.to(model.device) for k, v in inputs.items()}
+
             output_ids = model.generate(
-                input_ids,
+                **inputs,
                 max_new_tokens=512,
                 do_sample=True,
                 temperature=temperature,
                 pad_token_id=tokenizer.eos_token_id
             )
 
-            response = tokenizer.decode(output_ids[0][input_ids.shape[-1]:], skip_special_tokens=True)
+            response = tokenizer.decode(output_ids[0][inputs["input_ids"].shape[-1]:], skip_special_tokens=True)
             return response
 
         temperature = max(temperature, 1e-5)
