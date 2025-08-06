@@ -1508,10 +1508,17 @@ def get_chat_model(model_name, temperature=0):
                 {"role": "user", "content": content}
             ]
 
-            inputs = tokenizer.apply_chat_template(
+            prompt_str = tokenizer.apply_chat_template(
                 messages,
+                add_generation_prompt=True,
+                tokenize=False  # important: get raw text
+            )
+
+            inputs = tokenizer(
+                prompt_str,
                 return_tensors="pt",
-                add_generation_prompt=True
+                padding=True,
+                truncation=True
             )
             inputs = {k: v.to(model.device) for k, v in inputs.items()}
 
