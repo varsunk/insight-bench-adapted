@@ -10,7 +10,7 @@ dataset_dict = benchmarks.load_dataset_dict("data/notebooks/flag-1.json")
 
 # Run an Agent
 agent = agents.Agent(
-    model_name="gpt-4o-mini",
+    model_name="qwen", # or gpt-4o-mini
     max_questions=2,
     branch_depth=1,
     n_retries=2,
