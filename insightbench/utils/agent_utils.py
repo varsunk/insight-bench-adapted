@@ -1525,7 +1525,7 @@ def get_chat_model(model_name, temperature=0):
 
             output_ids = model.generate(
                 **inputs,
-                max_new_tokens=512,
+                max_new_tokens=1024,
                 do_sample=True,
                 temperature=temperature,
                 pad_token_id=tokenizer.eos_token_id
