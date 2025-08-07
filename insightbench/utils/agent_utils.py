@@ -1505,7 +1505,7 @@ def get_chat_model(model_name, temperature=0):
         # function to interface w/ hf model in the same way as is done with openai model above
         def qwen_chat(content, temperature):
             messages = [
-                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "system", "content": "You are a concise assistant. Provide short, direct answers without additional reasoning or explanation."},
                 {"role": "user", "content": content}
             ]
 
