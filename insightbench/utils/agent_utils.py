@@ -1492,7 +1492,8 @@ def get_chat_model(model_name, temperature=0):
         from transformers import AutoTokenizer, AutoModelForCausalLM
         import torch
 
-        model_id = "Qwen/Qwen2-1.5B-Instruct"
+        # model_id = "Qwen/Qwen2-1.5B-Instruct"
+        model_id = "Qwen/Qwen3-4B"
         tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
         model = AutoModelForCausalLM.from_pretrained(
             model_id,
