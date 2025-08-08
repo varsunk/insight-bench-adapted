@@ -1512,7 +1512,8 @@ def get_chat_model(model_name, temperature=0):
             prompt_str = tokenizer.apply_chat_template(
                 messages,
                 add_generation_prompt=True,
-                tokenize=False  # important: get raw text
+                tokenize=False,  # important: get raw text
+                enable_thinking=False # for testing purposes
             )
 
             inputs = tokenizer(
