@@ -91,7 +91,8 @@ if __name__ == "__main__":
     # exp_list
     exp_list = []
     for benchmark_type in ["toy"]:
-        for model_name in ["gpt-4o-mini"]:
+        # for model_name in ["gpt-4o-mini"]: 
+        for model_name in ["qwen"]:
             exp_list.append(
                 {
                     "benchmark_type": benchmark_type,
