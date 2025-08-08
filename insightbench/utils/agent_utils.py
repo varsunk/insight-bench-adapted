@@ -1493,7 +1493,7 @@ def get_chat_model(model_name, temperature=0):
         import torch
 
         # model_id = "Qwen/Qwen2-1.5B-Instruct"
-        model_id = "Qwen/Qwen3-8B"
+        model_id = "varsunk/Qwen2-1.5B-Instruct-GRPO-test"
         tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
         model = AutoModelForCausalLM.from_pretrained(
             model_id,
@@ -1513,7 +1513,7 @@ def get_chat_model(model_name, temperature=0):
                 messages,
                 add_generation_prompt=True,
                 tokenize=False,  # important: get raw text
-                enable_thinking=False # for testing purposes
+                # enable_thinking=False # for testing purposes
             )
 
             inputs = tokenizer(
